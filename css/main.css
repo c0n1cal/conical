@@ -1,0 +1,267 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    width: 100vw;
+    background: none;
+    /* Убираем фон с body */
+    filter: none;
+    /* Убираем фильтры с body */
+    overflow: hidden;
+    position: relative;
+    /* Важно для позиционирования body::before */
+}
+
+
+/* Создаем псевдоэлемент body::before для фона и блюра */
+
+body::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url("../images/bg.gif") no-repeat center center fixed;
+    /* Фон BG.GIF */
+    background-size: cover;
+    filter: brightness(0.8) grayscale(100%) blur(4px);
+    /* Блюр ТОЛЬКО ЗДЕСЬ! */
+    z-index: -1;
+    /* Помещаем под контент body */
+}
+
+.container {
+    width: 100vw;
+    /* Контейнер на весь экран */
+    height: 100vh;
+    /* Контейнер на весь экран */
+    position: relative;
+    border-radius: 0;
+    /* Убираем закругления, так как он на весь экран */
+    overflow: hidden;
+    box-shadow: none;
+    /* Убираем тень */
+    background: rgba(255, 255, 255, 0.01);
+    /* Очень низкая непрозрачность для эффекта матового стекла */
+    backdrop-filter: blur(8px);
+    /* Матовое стекло на контейнере */
+    -webkit-backdrop-filter: blur(8px);
+    /* Для Safari */
+    z-index: 10;
+    /* Убеждаемся, что контейнер поверх фона body::before */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.container::before {
+    content: none;
+    /* Этот псевдоэлемент контейнера больше не нужен */
+}
+
+
+/* --- Header Section (conical, Owner, Album Art) --- */
+
+.header-section {
+    position: relative;
+    width: 450px;
+    /* Увеличенная ширина "bio" блока */
+    z-index: 2;
+    margin-bottom: 40px;
+    /* Отступ между секциями */
+}
+
+.album-art {
+    width: 100%;
+    height: 90px;
+    /* Увеличенная высота обложки альбома */
+    background: url("../images/banner.gif") no-repeat center center;
+    background-size: cover;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    overflow: hidden;
+    position: relative;
+}
+
+.info-bar {
+    width: 100%;
+    height: 65px;
+    /* Увеличенная высота info-bar */
+    background: rgba(0, 0, 0, 0.5);
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+    /* Увеличенный padding */
+    position: relative;
+}
+
+.artist-name {
+    color: rgba(255, 255, 255, 1);
+    font-size: 26px;
+    /* Увеличенный размер шрифта */
+    margin-right: auto;
+}
+
+.owner-tag {
+    background: linear-gradient(to right, rgba(0, 0, 0, 1), rgba(255, 255, 255, 1));
+    border-radius: 3px;
+    padding: 4px 10px;
+    /* Увеличенный padding */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    white-space: nowrap;
+}
+
+.owner-text {
+    color: rgba(255, 255, 255, 1);
+    font-size: 12px;
+    /* Увеличенный размер шрифта */
+}
+
+
+/* --- Player Section --- */
+
+.player-section {
+    position: relative;
+    width: 450px;
+    /* Увеличенная ширина "music" блока */
+    height: 100px;
+    /* Увеличенная высота "music" блока */
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 8px;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 15px 20px;
+    /* Увеличенный padding */
+}
+
+.track-title {
+    color: rgba(255, 255, 255, 1);
+    font-size: 18px;
+    /* Увеличенный размер шрифта */
+    text-align: left;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-bottom: 5px;
+    /* Отступ от элементов управления */
+}
+
+.controls {
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+
+/* Скрываем стандартные элементы управления audio-тега */
+
+audio {
+    display: none;
+}
+
+.play-pause-button {
+    display: flex;
+    /* Используем flexbox для размещения полос */
+    align-items: center;
+    justify-content: space-between;
+    /* Расстояние между полосками Play */
+    width: 24px;
+    /* Размер контейнера кнопки */
+    height: 24px;
+    /* Размер контейнера кнопки */
+    cursor: pointer;
+    margin-right: 20px;
+    /* Отступ от прогресс-бара */
+    /* margin-left: 80px; */
+    /* Этого не было на финальном изображении, если нужно, можно вернуть */
+    flex-shrink: 0;
+    /* Не сжимать кнопку */
+}
+
+.play-pause-bar {
+    width: 4px;
+    /* Ширина каждой полоски */
+    height: 24px;
+    /* Высота каждой полоски */
+    background: rgba(215, 215, 215, 1);
+    border-radius: 2px;
+}
+
+
+/* Стилизация для левой и правой полоски кнопки Play (если они нужны для иконки play) */
+
+.play-pause-bar.bar-left {
+    /* Для Play icon: left bar */
+}
+
+.play-pause-bar.bar-right {
+    /* For Play icon: right bar */
+}
+
+.progress-bar-container {
+    flex-grow: 1;
+    /* Занимает все доступное пространство */
+    height: 7px;
+    /* Высота прогресс-бара */
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 1px;
+    position: relative;
+    margin-right: 10px;
+    /* Отступ от времени */
+    cursor: pointer;
+    /* Указываем, что по нему можно кликать */
+}
+
+.progress-bar {
+    width: 0%;
+    /* Начальный прогресс (будет меняться JS) */
+    height: 100%;
+    background: linear-gradient(to right, rgba(255, 255, 255, 1), rgba(0, 0, 0, 1));
+    border-radius: 1px;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.progress-thumb {
+    width: 10px;
+    /* Размер ползунка */
+    height: 10px;
+    /* Размер ползунка */
+    background: rgba(255, 255, 255, 1);
+    border-radius: 50%;
+    position: absolute;
+    top: 50%;
+    /* Центрируем по вертикали */
+    transform: translate(-50%, -50%);
+    /* Центрируем ползунок относительно его точки отсчета */
+    /* Важно: left будет устанавливаться через JS на основе progressBar.style.width */
+    pointer-events: none;
+    /* Не реагирует на клики, чтобы клик проходил на progress-bar-container */
+}
+
+.time-display {
+    color: rgba(255, 255, 255, 1);
+    font-size: 14px;
+    /* Размер шрифта времени */
+    white-space: nowrap;
+    flex-shrink: 0;
+    /* Не сжимать время */
+}
